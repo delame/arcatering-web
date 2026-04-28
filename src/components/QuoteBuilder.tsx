@@ -111,6 +111,7 @@ export function QuoteBuilder({ copy, products, lang }: QuoteBuilderProps) {
 
   const cartContents = (
     <>
+      {/* HEADER — pinned top */}
       <div className="drawer-header">
         <h3 className="display-h4">{c.stickyTitle}</h3>
         <span className="drawer-count">{itemCount}</span>
@@ -124,87 +125,93 @@ export function QuoteBuilder({ copy, products, lang }: QuoteBuilderProps) {
         </div>
       ) : (
         <>
-          {cartList.length === 0 ? (
-            <div className="cart-empty">
-              <div className="cart-empty-icon"><Icon name="cart" size={20} /></div>
-              <p className="muted">{c.empty}</p>
-            </div>
-          ) : (
-            <ul className="cart-items">
-              {cartList.map(it => (
-                <li key={it.id} className="cart-item">
-                  <div className="cart-item-info">
-                    <div className="cart-item-name">{it.name}</div>
-                    <div className="cart-item-line">
-                      <span>{it.qty} × {it.price} Kč</span>
-                      <b>{fmt(it.qty * it.price)} Kč</b>
-                    </div>
-                  </div>
-                  <div className="cart-item-ctrls">
-                    <Stepper qty={it.qty} onInc={() => inc(it.id)} onDec={() => dec(it.id)} addLabel={c.add} />
-                    <button className="cart-item-x" onClick={() => setQty(it.id, 0)} title={c.remove}><Icon name="close" size={11} /></button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-
-          {cartList.length > 0 && (
-            <div className="cart-total">
-              <div className="cart-total-row">
-                <span className="muted">{c.total}</span>
-                <b className="cart-total-num">{fmt(total)} Kč</b>
+          {/* SCROLLABLE MIDDLE — cart items + form */}
+          <div className="drawer-scroll">
+            {cartList.length === 0 ? (
+              <div className="cart-empty">
+                <div className="cart-empty-icon"><Icon name="cart" size={20} /></div>
+                <p className="muted">{c.empty}</p>
               </div>
-              <p className="muted total-note">{c.totalNote}</p>
-            </div>
-          )}
+            ) : (
+              <ul className="cart-items">
+                {cartList.map(it => (
+                  <li key={it.id} className="cart-item">
+                    <div className="cart-item-info">
+                      <div className="cart-item-name">{it.name}</div>
+                      <div className="cart-item-line">
+                        <span>{it.qty} × {it.price} Kč</span>
+                        <b>{fmt(it.qty * it.price)} Kč</b>
+                      </div>
+                    </div>
+                    <div className="cart-item-ctrls">
+                      <Stepper qty={it.qty} onInc={() => inc(it.id)} onDec={() => dec(it.id)} addLabel={c.add} />
+                      <button className="cart-item-x" onClick={() => setQty(it.id, 0)} title={c.remove}><Icon name="close" size={11} /></button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
 
-          <div className="quote-form">
-            <div className="form-row two">
+            <div className="quote-form">
+              <div className="form-row two">
+                <label className="field">
+                  <span className="field-label">{c.formGuests}</span>
+                  <input type="number" min="1" value={form.guests} onChange={e => setForm({ ...form, guests: e.target.value })} />
+                </label>
+                <label className="field">
+                  <span className="field-label">{c.formDate}</span>
+                  <input type="datetime-local" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} />
+                </label>
+              </div>
               <label className="field">
-                <span className="field-label">{c.formGuests}</span>
-                <input type="number" min="1" value={form.guests} onChange={e => setForm({ ...form, guests: e.target.value })} />
+                <span className="field-label">{c.formNotes}</span>
+                <textarea rows={2} placeholder={c.formNotesPh} value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
               </label>
-              <label className="field">
-                <span className="field-label">{c.formDate}</span>
-                <input type="datetime-local" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} />
+              <div className="form-divider"></div>
+              <div className="form-row two">
+                <label className="field">
+                  <span className="field-label">{c.formName}<em> *</em></span>
+                  <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+                </label>
+                <label className="field">
+                  <span className="field-label">{c.formCompany}</span>
+                  <input type="text" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} />
+                </label>
+              </div>
+              <div className="form-row two">
+                <label className="field">
+                  <span className="field-label">{c.formEmail}<em> *</em></span>
+                  <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
+                </label>
+                <label className="field">
+                  <span className="field-label">{c.formPhone}</span>
+                  <input type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
+                </label>
+              </div>
+              <label className="consent">
+                <input type="checkbox" checked={form.consent} onChange={e => setForm({ ...form, consent: e.target.checked })} />
+                <span>{c.consent}</span>
               </label>
             </div>
-            <label className="field">
-              <span className="field-label">{c.formNotes}</span>
-              <textarea rows={2} placeholder={c.formNotesPh} value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
-            </label>
-            <div className="form-divider"></div>
-            <div className="form-row two">
-              <label className="field">
-                <span className="field-label">{c.formName}<em> *</em></span>
-                <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
-              </label>
-              <label className="field">
-                <span className="field-label">{c.formCompany}</span>
-                <input type="text" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} />
-              </label>
-            </div>
-            <div className="form-row two">
-              <label className="field">
-                <span className="field-label">{c.formEmail}<em> *</em></span>
-                <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
-              </label>
-              <label className="field">
-                <span className="field-label">{c.formPhone}</span>
-                <input type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
-              </label>
-            </div>
-            <label className="consent">
-              <input type="checkbox" checked={form.consent} onChange={e => setForm({ ...form, consent: e.target.checked })} />
-              <span>{c.consent}</span>
-            </label>
+          </div>
+
+          {/* FOOTER — pinned bottom: total + submit always visible */}
+          <div className="drawer-footer">
+            {cartList.length > 0 && (
+              <div className="cart-total">
+                <div className="cart-total-row">
+                  <span className="muted">{c.total}</span>
+                  <b className="cart-total-num">{fmt(total)} Kč</b>
+                </div>
+                <p className="muted total-note">{c.totalNote}</p>
+              </div>
+            )}
             <button
               className="submit-btn"
               disabled={submitState === "sending" || !form.consent || !form.email || !form.name || cartList.length === 0}
               onClick={handleSubmit}
             >
-              {submitState === "sending" ? c.sending : submitState === "error" ? c.submit : c.submit}
+              {submitState === "sending" ? c.sending : c.submit}
               {submitState !== "sending" && <Icon name="arrow" size={14} />}
             </button>
             {submitState === "error" && (
