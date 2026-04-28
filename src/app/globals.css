@@ -369,6 +369,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .footer-cta { padding: 96px 0; background: oklch(20% 0.012 240); color: #fff; }
 .footer-cta .display-h2 { color: #fff; }
 .footer-cta .lead { color: rgba(255,255,255,.78); }
+.footer-cta .btn-ghost { border-color: rgba(255,255,255,.25); color: #fff; background: transparent; }
+.footer-cta .btn-ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.4); }
 .fcta-inner { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; }
 .fcta-inner .lead { margin: 0 auto; }
 .fcta-inner .hero-cta { margin-top: 12px; margin-bottom: 0; justify-content: center; display: flex; gap: 12px; flex-wrap: wrap; }
