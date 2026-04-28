@@ -118,7 +118,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .brand-lg { font-size: 26px; }
 
 /* --- Nav --- */
-.nav { position: sticky; top: 0; z-index: 50; padding: 18px 0; transition: background 200ms ease, border-color 200ms ease, padding 200ms ease, box-shadow 200ms ease; border-bottom: 1px solid transparent; background: color-mix(in oklab, var(--bg) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.nav { position: sticky; top: 0; z-index: 100; padding: 18px 0; transition: background 200ms ease, border-color 200ms ease, padding 200ms ease, box-shadow 200ms ease; border-bottom: 1px solid transparent; background: color-mix(in oklab, var(--bg) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .nav.scrolled { padding: 12px 0; border-bottom-color: var(--line); box-shadow: 0 1px 12px rgba(0,0,0,.04); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--muted); font-weight: 500; }
@@ -264,10 +264,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* --- Quote section --- */
 .quote-section { padding: 96px 0 120px; background: var(--bg2); border-top: 1px solid var(--line); scroll-margin-top: 80px; }
 .quote-shell { display: grid; gap: 28px; }
-.quote-shell.with-drawer { grid-template-columns: minmax(0, 1fr) 380px; align-items: start; }
+.quote-shell.with-drawer { grid-template-columns: minmax(0, 1fr) 420px; align-items: start; }
 @media (max-width: 1100px){ .quote-shell.with-drawer { grid-template-columns: 1fr; } }
 
-.catalog-controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; position: sticky; top: 72px; background: color-mix(in oklab, var(--bg2) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 12px 0; z-index: 5; border-bottom: 1px solid var(--line); }
+.catalog-controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; position: sticky; top: 72px; background: color-mix(in oklab, var(--bg2) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 12px 0; z-index: 4; border-bottom: 1px solid var(--line); }
 .cat-tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: thin; margin: 0 -32px; padding: 0 32px 4px; }
 .cat-tabs::-webkit-scrollbar { height: 4px; }
 .cat-tabs::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
@@ -311,7 +311,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .stepper-qty { min-width: 22px; text-align: center; font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--fg); }
 
 /* Drawer */
-.quote-drawer { position: sticky; top: 80px; align-self: start; max-height: calc(100vh - 100px); overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--card); display: flex; flex-direction: column; box-shadow: 0 4px 16px rgba(0,0,0,.04); }
+.quote-drawer { position: sticky; top: 80px; z-index: 4; align-self: start; max-height: calc(100vh - 100px); overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--card); display: flex; flex-direction: column; box-shadow: 0 4px 16px rgba(0,0,0,.04); }
 @media (max-width: 1100px){ .quote-drawer { display: none; } }
 .drawer-inner { display: flex; flex-direction: column; overflow-y: auto; flex: 1; scrollbar-width: thin; }
 .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--card); z-index: 1; }
@@ -338,12 +338,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .quote-form { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 12px; }
 .form-row { display: flex; flex-direction: column; gap: 12px; }
-.form-row.two { display: grid; grid-template-columns: 1fr 1fr; }
+.form-row.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px){ .form-row.two { grid-template-columns: 1fr; } }
 .form-divider { height: 1px; background: var(--line); margin: 4px 0; }
 .field { display: flex; flex-direction: column; gap: 4px; }
 .field-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 .field-label em { color: var(--accent-deep); font-style: normal; }
-.field input, .field textarea { border: 1px solid var(--line); background: var(--bg); color: var(--fg); padding: 9px 11px; border-radius: 6px; font: inherit; font-size: 13px; outline: none; transition: border-color 100ms ease, box-shadow 100ms ease; font-family: var(--ui); }
+.field input, .field textarea { border: 1px solid var(--line); background: var(--bg); color: var(--fg); padding: 9px 11px; border-radius: 6px; font: inherit; font-size: 13px; outline: none; transition: border-color 100ms ease, box-shadow 100ms ease; font-family: var(--ui); width: 100%; min-width: 0; }
 .field input:focus, .field textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 25%, transparent); }
 .field textarea { resize: vertical; min-height: 60px; line-height: 1.45; }
 .consent { display: flex; gap: 8px; font-size: 11.5px; color: var(--muted); align-items: flex-start; line-height: 1.45; margin-top: 4px; }
