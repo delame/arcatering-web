@@ -128,7 +128,7 @@ export function QuoteBuilder({ copy, products, lang, pricing }: QuoteBuilderProp
     return (
       <div className={`item-card ${qty > 0 ? "has" : ""}`}>
         <div className="item-card-photo" onClick={() => setDetail(item)} role="button" tabIndex={0} aria-label={item.name} style={{ cursor: "pointer" }}>
-          {photoError ? (
+          {photoError || !(item.urlPic ?? item.photo) ? (
             <div className="photo-placeholder"><Icon name="photo" size={40} /></div>
           ) : (
             <Image src={item.urlPic ?? item.photo} alt={item.name} width={250} height={187} style={{ objectFit: "cover", width: "100%", height: "100%" }} onError={() => setPhotoError(true)} />
@@ -460,7 +460,7 @@ function DetailPhoto({ item }: { item: ProductItem }) {
   const [photoError, setPhotoError] = useState(false);
   return (
     <div style={{ width: "100%", aspectRatio: "4 / 3", overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
-      {photoError ? (
+      {photoError || !(item.urlPic ?? item.photo) ? (
         <div className="photo-placeholder"><Icon name="photo" size={56} /></div>
       ) : (
         <Image src={item.urlPic ?? item.photo} alt={item.name} width={520} height={390} style={{ objectFit: "cover", width: "100%", height: "100%" }} onError={() => setPhotoError(true)} />

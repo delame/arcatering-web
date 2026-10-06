@@ -19,7 +19,8 @@ export async function GET(
     const recData = await recRes.json();
     const fotoPath = recData?.data?.Foto;
     if (!fotoPath || typeof fotoPath !== "string") {
-      return new Response("No image", { status: 404 });
+      // cachujeme i 404, jinak by každá návštěva znovu volala Creator (kvóta)
+      return new Response("No image", { status: 404, headers: { "Cache-Control": "public, s-maxage=3600" } });
     }
 
     // 2. stáhni obrázek (povol jen cestu k Foto download tohoto reportu)
