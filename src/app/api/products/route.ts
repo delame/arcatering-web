@@ -21,6 +21,7 @@ function slug(s: string): string {
 interface CatalogItem {
   id: string;
   photo: string;
+  urlPic?: string;
   name: string;
   description: string;
   price: number;
@@ -32,11 +33,11 @@ interface CatalogItem {
 }
 
 // Kvóta Creator API je omezená a počítá se na každé volání. Katalog proto čteme
-// z Creatoru max. jednou za hodinu, ne při každé návštěvě webu:
+// z Creatoru max. jednou za 6 hodin, ne při každé návštěvě webu:
 //  - CDN (Vercel) drží odpověď přes s-maxage, návštěvníci se do funkce vůbec nedostanou
 //  - paměť instance drží poslední dobrou odpověď (použije se i když Creator selže)
-const FRESH_MS = 60 * 60 * 1000;
-const OK_HEADERS = { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" };
+const FRESH_MS = 6 * 60 * 60 * 1000;
+const OK_HEADERS = { "Cache-Control": "public, s-maxage=21600, stale-while-revalidate=86400" };
 let cache: { categories: unknown[]; exp: number } | null = null;
 
 async function loadCatalog() {
@@ -72,6 +73,12 @@ async function loadCatalog() {
       // bez fotky v Creatoru neposíláme URL → frontend rovnou ukáže placeholder
       // a nevolá /api/product-image (každé takové volání by stálo kvótu)
       photo: r.Foto ? `/api/product-image/${r.ID}` : "",
+      // Cloudinary URL (pole urlPic v Creatoru) – fotka se pak načítá přímo z Cloudinary,
+      // bez volání Creator API. next/image povoluje jen res.cloudinary.com, jiný host by
+      // shodil render, proto jiné URL ignorujeme.
+      ...(typeof r.urlPic === "string" && r.urlPic.startsWith("https://res.cloudinary.com/")
+        ? { urlPic: r.urlPic }
+        : {}),
       name: (r.Nazev as string) ?? "",
       description: (r.Popis as string) ?? "",
       price: parseFloat(r.Cena as string) || 0,
