@@ -128,6 +128,14 @@ async function loadCatalog(): Promise<CatalogCategory[]> {
     from += limit;
   }
 
+  // Verze fotky = krátký otisk cesty k souboru v poli Foto. Creator dává každému nahranému
+  // souboru nový název, takže výměna fotky změní URL a obejde týdenní cache obrázků.
+  const photoVersion = (path: string) => {
+    let h = 5381;
+    for (let i = 0; i < path.length; i++) h = ((h * 33) ^ path.charCodeAt(i)) >>> 0;
+    return h.toString(36);
+  };
+
   // Seskup podle kategorie, jen dostupné
   const byCat: Record<string, CatalogItem[]> = {};
   for (const r of records) {
@@ -137,7 +145,7 @@ async function loadCatalog(): Promise<CatalogCategory[]> {
       id: String(r.ID),
       // bez fotky v Creatoru neposíláme URL → frontend rovnou ukáže placeholder
       // a nevolá /api/product-image (každé takové volání by stálo kvótu)
-      photo: r.Foto ? `/api/product-image/${r.ID}` : "",
+      photo: r.Foto ? `/api/product-image/${r.ID}/${photoVersion(String(r.Foto))}` : "",
       // Cloudinary URL (pole urlPic v Creatoru) – fotka se pak načítá přímo z Cloudinary,
       // bez volání Creator API. next/image povoluje jen res.cloudinary.com, jiný host by
       // shodil render, proto jiné URL ignorujeme.
