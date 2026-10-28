@@ -67,6 +67,9 @@ export const COPY: Record<string, CopyData> = {
       filterVeg: "Vegetariánské",
       filterVegan: "Veganské",
       filterFish: "Ryby",
+      filterChicken: "Kuřecí",
+      filterBeef: "Hovězí",
+      filterPork: "Vepřové",
       add: "Přidat",
       remove: "Odebrat",
       from: "od",
@@ -220,6 +223,9 @@ export const COPY: Record<string, CopyData> = {
       filterVeg: "Vegetarian",
       filterVegan: "Vegan",
       filterFish: "Fish",
+      filterChicken: "Chicken",
+      filterBeef: "Beef",
+      filterPork: "Pork",
       add: "Add",
       remove: "Remove",
       from: "from",
@@ -368,6 +374,9 @@ export interface CopyData {
     filterVeg: string;
     filterVegan: string;
     filterFish: string;
+    filterChicken: string;
+    filterBeef: string;
+    filterPork: string;
     add: string;
     remove: string;
     from: string;

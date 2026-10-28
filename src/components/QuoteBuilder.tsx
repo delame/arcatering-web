@@ -78,6 +78,9 @@ export function QuoteBuilder({ copy, products, lang, pricing }: QuoteBuilderProp
     if (filter === "veg") return cat.items.filter(i => i.tags.includes("veg") || i.tags.includes("vegan"));
     if (filter === "vegan") return cat.items.filter(i => i.tags.includes("vegan"));
     if (filter === "fish") return cat.items.filter(i => i.tags.includes("fish") || i.tags.includes("ryba"));
+    if (filter === "chicken") return cat.items.filter(i => i.tags.includes("kuřecí"));
+    if (filter === "beef") return cat.items.filter(i => i.tags.includes("hovězí"));
+    if (filter === "pork") return cat.items.filter(i => i.tags.includes("vepřový"));
     return cat.items;
   };
 
@@ -401,7 +404,7 @@ export function QuoteBuilder({ copy, products, lang, pricing }: QuoteBuilderProp
                 ))}
               </nav>
               <div className="filter-pills">
-                {([["all", c.filterAll], ["veg", c.filterVeg], ["vegan", c.filterVegan], ["fish", c.filterFish]] as const).map(([k, l]) => (
+                {([["all", c.filterAll], ["veg", c.filterVeg], ["vegan", c.filterVegan], ["fish", c.filterFish], ["chicken", c.filterChicken], ["beef", c.filterBeef], ["pork", c.filterPork]] as const).map(([k, l]) => (
                   <button key={k} className={`pill ${filter === k ? "on" : ""}`} onClick={() => setFilter(k)}>{l}</button>
                 ))}
               </div>
